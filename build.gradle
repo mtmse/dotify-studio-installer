@@ -25,6 +25,9 @@ dependencies {
 	app ("org.daisy.dotify:$artifactName:$version@zip") {
 		transitive false
 	}
+	appPlugins ('se.mtm.addons:mtm-dotify-addons:2.2.0') {
+		transitive false
+	}
 }
 
 task unzip(type: Copy, description: 'Unzips the distribution to a temporary folder.') {
