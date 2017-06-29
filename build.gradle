@@ -18,6 +18,7 @@ configurations {
 repositories {
     mavenCentral()
     //mavenLocal()
+    maven { url "https://oss.sonatype.org/content/groups/staging" }
     //maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
@@ -93,12 +94,13 @@ configure( [msi] ) {
     }
 }
 
-configure( [dmg, deb, rpm] ) {
+configure( [deb, rpm] ) {
     doFirst {
         setupBuilder {
 		    desktopStarter {
 		        executable = "bin/dotify-studio"
 		        location = "ApplicationMenu"
+				categories = "Office"
 		    }
         }
     }
@@ -122,7 +124,13 @@ msi {
 
 deb {
     maintainerEmail = 'joel.hakansson@mtm.se'
+    postinst = 'chmod +x /usr/share/dotify-studio/bin/dotify-studio'
 }
+
+rpm {
+    postinst = 'chmod +x /usr/share/dotify-studio/bin/dotify-studio'
+}
+
 
 task wrapper(type: Wrapper, description: 'Refreshes the gradle wrapper') {
     gradleVersion = '3.0'
