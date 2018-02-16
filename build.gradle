@@ -27,7 +27,7 @@ dependencies {
 	app ("org.daisy.dotify:$artifactName:$version@zip") {
 		transitive false
 	}
-	appPlugins ('se.mtm.addons:mtm-dotify-addons:2.3.0') {
+	appPlugins ('se.mtm.addons:mtm-dotify-addons:3.0.0') {
 		transitive false
 	}
 }
