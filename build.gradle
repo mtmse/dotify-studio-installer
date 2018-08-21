@@ -55,6 +55,11 @@ task copyPlugins(type: Copy, dependsOn: 'unzip', description: 'Copies additional
 	into file("${appBase}/lib/plugins")
 }
 
+task copyPluginsFlatLib(type: Copy, dependsOn: 'unzipFlatLib', description: 'Copies additional jars to the plugins folder (requires editing of build.gradle)') {
+	from configurations.appPlugins
+	into file("${appBase}/plugins")
+}
+
 def modifyPath(def path) {
 	def modified=path.replaceAll('\\Adotify-studio[^/]*(.+)', {"dotify-studio${it[1]}"})
 	return modified
@@ -241,7 +246,7 @@ ext.runJavaPackager = { bundles, appIcon, appName ->
 
 }
 
-task jpMsi(dependsOn: 'deleteBinFlatLib', description: 'Uses javapackager to create msi installer (experimental).') {
+task jpMsi(dependsOn: ['deleteBinFlatLib', 'copyPluginsFlatLib'], description: 'Uses javapackager to create msi installer (experimental).') {
 	doLast() {
 		runJavaPackager('msi', file('ant-build/resources/app-icon.ico').getAbsolutePath(), 'dotify-studio')
 	}
